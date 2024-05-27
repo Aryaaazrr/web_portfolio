@@ -202,9 +202,11 @@
                 @foreach ($portofolio as $item)
                     <div class="mb-12 p-4 md:w-1/2">
                         <div class="rounded-md shadow-md overflow-hidden">
-                            <img src="{{ asset('cover/' . $item->cover) }}" alt="{{ $item->judul }}" class="w-full">
+                            <img src="{{ asset('cover/' . $item->cover) }}" alt="{{ $item->judul_portofolio }}"
+                                class="w-full">
                         </div>
-                        <h3 class="font-semibold text-xl text-dark mt-5 mb-3 dark:text-white">{{ $item->judul }}</h3>
+                        <h3 class="font-semibold text-xl text-dark mt-5 mb-3 dark:text-white">
+                            {{ $item->judul_portofolio }}</h3>
                         <p class="font-medium text-base text-secondary">{{ $item->deskripsi }}
                         </p>
                     </div>
