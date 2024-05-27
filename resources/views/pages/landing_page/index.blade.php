@@ -234,7 +234,7 @@
                 <div class="flex flex-wrap items-center justify-center">
                     @foreach ($client as $item)
                         <a href="{{ $item->link }}" target="_blank"
-                            class="max-w-[180px] mx-4 py-4 mb-4 grayscale opacity-60 transition hover:grayscale-0 hover:opacity-100 lg:mx-5 xl:mx-6 xl:mb-0">
+                            class="max-w-[100px] mx-4 py-4 mb-4 grayscale opacity-60 transition hover:grayscale-0 hover:opacity-100 lg:mx-5 xl:mx-6 xl:mb-0">
                             <img src="{{ asset('logo/' . $item->logo) }}" alt="logo_{{ $item->link }}">
                         </a>
                     @endforeach
