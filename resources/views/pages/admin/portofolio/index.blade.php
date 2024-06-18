@@ -37,7 +37,8 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('portofolio.store') }}" method="POST"
+                                                        enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="card-body">
                                                             <div class="form-group">
@@ -117,7 +118,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('portofolio.update') }}" method="POST">
+                        <form action="{{ route('portofolio.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">

@@ -55,17 +55,6 @@ class BlogController extends Controller
             'cover' => 'required|image|mimes:jpeg,png,jpg',
         ]);
 
-        // $validator->after(function ($validator) use ($request) {
-        //     if ($request->hasFile('cover')) {
-        //         $file = $request->file('cover');
-        //         list($width, $height) = getimagesize($file);
-
-        //         if ($width != 3000 || $height != 2000) {
-        //             $validator->errors()->add('cover', 'The image must be 3000x2000 pixels.');
-        //         }
-        //     }
-        // });
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -123,17 +112,6 @@ class BlogController extends Controller
             'deskripsi' => 'required|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
-
-        // $validator->after(function ($validator) use ($request) {
-        //     if ($request->hasFile('cover')) {
-        //         $file = $request->file('cover');
-        //         list($width, $height) = getimagesize($file);
-
-        //         if ($width != 3000 || $height != 2000) {
-        //             $validator->errors()->add('cover', 'The image must be 3000x2000 pixels.');
-        //         }
-        //     }
-        // });
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
