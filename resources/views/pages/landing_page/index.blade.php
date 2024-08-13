@@ -86,7 +86,6 @@
             </div>
         </div>
     </header>
-    <!-- header end -->
 
     <!-- hero section start -->
     <section id="home" class="pt-36 pb-28 dark:bg-dark">
