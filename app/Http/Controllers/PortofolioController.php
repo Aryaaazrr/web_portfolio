@@ -155,4 +155,90 @@ class PortofolioController extends Controller
             return response()->json(['message' => 'Terjadi kesalahan saat menghapus data'], 500);
         }
     }
+
+    public function apiPortofolio(Request $request)
+    {
+        $query = Portofolio::query();
+
+        if ($request->has('name')) {
+            $query->where('judul_portofolio', 'like', '%' . $request->name . '%');
+        }
+
+        $portofolio = $query->paginate(10);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $portofolio->items(),
+            'pagination' => [
+                'total' => $portofolio->total(),
+                'per_page' => $portofolio->perPage(),
+                'current_page' => $portofolio->currentPage(),
+                'last_page' => $portofolio->lastPage(),
+            ],
+        ]);
+    }
+
+    public function apiStore(Request $request)
+    {
+        $request->validate([
+            'judul_portofolio' => 'required|string',
+            'deskripsi' => 'required|string',
+            'cover' => 'required|string',
+            'link' => 'nullable|string',
+        ]);
+
+        $portofolio = Portofolio::create($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Portofolio created successfully',
+            'data' => $portofolio
+        ]);
+    }
+
+    public function apiUpdate(Request $request, $id)
+    {
+        $portofolio = Portofolio::find($id);
+
+        if (!$portofolio) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Portofolio not found'
+            ], 404);
+        }
+
+        $request->validate([
+            'judul_portofolio' => 'required|string',
+            'deskripsi' => 'required|string',
+            'cover' => 'required|string',
+            'link' => 'nullable|string',
+        ]);
+
+        $portofolio->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Portofolio updated successfully',
+            'data' => $portofolio
+        ]);
+    }
+
+    public function apiDelete($id)
+    {
+        $portofolio = Portofolio::find($id);
+
+        if (!$portofolio) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Portofolio not found'
+            ], 404);
+        }
+
+        $portofolio->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Portofolio deleted successfully'
+        ]);
+    }
 }
