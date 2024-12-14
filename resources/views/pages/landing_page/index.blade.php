@@ -12,9 +12,9 @@
         rel="stylesheet" />
     <link rel="icon" type="icon" href="{{ asset('assets/img/foto-formal.png') }}" />
     <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia(
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
                 '(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
+            document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark')
         }
@@ -61,19 +61,22 @@
                                 <a href="#blog"
                                     class="text-base text-dark py-2 mx-8 flex group-hover:text-primary duration-500 dark:text-white">Blog</a>
                             </li>
-                            <li class="group mt-2 flex items-center pl-8 lg:mt-0">
+                            <li class="group">
                                 <div class="flex">
-                                    <span class="mr-2 text-sm text-slate-500">Light</span>
-                                    <input type="checkbox" class="hidden" id="dark-toggle">
-                                    <label for="dark-toggle">
-                                        <div
-                                            class="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
-                                            <div
-                                                class="toggle-circle h-4 w-4 rounded-full bg-white transition duration-500 ease-in-out">
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <span class="ml-2 text-sm text-slate-500">Dark</span>
+                                    <button id="theme-toggle" type="button"
+                                        class="text-gray-500 py-2 mx-8 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                                            </path>
+                                        </svg>
+                                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                                fill-rule="evenodd" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
                                 </div>
                             </li>
                             <li class="group">
@@ -147,7 +150,8 @@
                 <div class="w-full px-4 lg:w-1/2">
                     <h3 class="font-semibold text-dark text-2xl mb-4 lg:text-3xl lg:pt-10 dark:text-white">Mari
                         Berteman</h3>
-                    <p class="font-medium text-base text-secondary mb-6">Hai! Saya senang Anda berkunjung ke web pribadi
+                    <p class="font-medium text-base text-secondary mb-6">Hai! Saya senang Anda berkunjung ke web
+                        pribadi
                         saya. Ayo berkenalan dan bagikan ide, inspirasi, atau cerita Anda. Mari membangun hubungan yang
                         positif dan saling mendukung. Saya sangat menghargai teman-teman baru, jadi mari berhubungan dan
                         saling berbagi dalam perjalanan hidup ini. Mari tetap terhubung, saling bertukar pendapat, dan
@@ -210,7 +214,7 @@
             </div>
             <div class="w-full px-4 flex flex-wrap justify-center">
                 @foreach ($portofolio as $item)
-                    <div class="mb-12 p-4 md:w-1/2">
+                    <a href="{{ $item->link }}" target="_blank" class="mb-12 p-4 md:w-1/2">
                         <div class="rounded-md shadow-md overflow-hidden">
                             <img src="{{ asset('cover/' . $item->cover) }}" alt="{{ $item->judul_portofolio }}"
                                 class="w-full">
@@ -219,7 +223,7 @@
                             {{ $item->judul_portofolio }}</h3>
                         <p class="font-medium text-base text-secondary">{{ $item->deskripsi }}
                         </p>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -372,6 +376,16 @@
                             <title>LinkedIn</title>
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+
+                    <a href="https://github.com/Aryaaazrr" target="_blank"
+                        class="w-9 h-9 mr-3 rounded-full flex justify-center items-center border border-slate-300 hover:border-primary hover:bg-primary hover:text-white">
+                        <svg role="img" width="20" class="fill-current text-white" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>GitHub</title>
+                            <path
+                                d="M12 0C5.373 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.11.82-.261.82-.577v-2.243c-3.338.725-4.042-1.415-4.042-1.415-.546-1.387-1.333-1.758-1.333-1.758-1.091-.746.082-.731.082-.731 1.205.084 1.838 1.236 1.838 1.236 1.07 1.834 2.806 1.305 3.492.998.108-.774.418-1.305.762-1.605-2.665-.306-5.467-1.335-5.467-5.932 0-1.31.467-2.382 1.236-3.222-.124-.305-.535-1.534.117-3.194 0 0 1.008-.322 3.3 1.231a11.484 11.484 0 0 1 3.003-.404c1.019.004 2.043.138 3.003.404 2.291-1.553 3.297-1.231 3.297-1.231.653 1.66.242 2.889.118 3.194.77.84 1.236 1.912 1.236 3.222 0 4.607-2.805 5.622-5.476 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.575C20.565 21.795 24 17.297 24 12c0-6.627-5.373-12-12-12z" />
                         </svg>
                     </a>
 
